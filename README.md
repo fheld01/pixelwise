@@ -1,3 +1,3 @@
 # PixelWise - an image classifier project
-<<<<<<< HEAD
-Its an image classification tool built with deeep learning
+##  Its an image classification tool built with deep learning
+I am currently choosing my topic of the 'Projektbericht', let's see what cool topics are out there!
