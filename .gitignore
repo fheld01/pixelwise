@@ -6,7 +6,7 @@ __pycache__/
 # Secrets
 .env
 
-' Data and Models
+# Data and Models
 data/
 models/*.pkl
 
