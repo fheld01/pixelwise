@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import numpy as np
 from app.classifier import classify_batch
-from app.models import Pred	iction, SessionLocal
+from app.models import Prediction, SessionLocal
 
 class ClassifyRequest(BaseModel):
 	pixels: list[list[int]]
@@ -22,7 +22,7 @@ def health():
 def results():
 	db = SessionLocal()
 	rows = (db.query(Prediction)
-		.order_by(Prediction.created_at.desc()
+		.order_by(Prediction.created_at.desc())
 		.limit(20).all())
 	db.close()
 	return {"results": [
@@ -34,14 +34,9 @@ def results():
 
 
 @app.post("/classify", response_model=ClassifyResponse)
-	response_model=ClassifyResponse,
-	dependencies=[Depends(verify_api_key)])
-@limiter.limit("30/minute")
-def classify(request: Request, 
-		req: ClassifyRequest):
+def classify(req: ClassifyRequest):
 	arr= np.array(req.pixels, dtype=np.uint8)[np.newaxis]
-	return classify_batch(arr)[0]
-
+	result =  classify_batch(arr)[0]
 	db = SessionLocal()
 	db.app(Prediction(
 	  prediction=result["prediction"],
@@ -49,5 +44,4 @@ def classify(request: Request,
 	  model_version="v1"))
 	db.commit()
 	db.close()
-	
 	return result
