@@ -38,7 +38,7 @@ def classify(req: ClassifyRequest):
 	arr= np.array(req.pixels, dtype=np.uint8)[np.newaxis]
 	result =  classify_batch(arr)[0]
 	db = SessionLocal()
-	db.app(Prediction(
+	db.add(Prediction(
 	  prediction=result["prediction"],
 	  confidence=result["confidence"],
 	  model_version="v1"))
