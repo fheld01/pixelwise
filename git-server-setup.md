@@ -19,7 +19,10 @@ sudo chown git:git /srv/git
 3. Create the bare repository
 ```bash
 sudo -u git git init --bare /srv/git/pixelwise.git
+cd /srv/git/pixelwise.git
+git symbolic-ref HEAD refs/heads/main
 ```
+A bare repo defaults its Head to `master`, this points it to `main` so that a clone checks out the correct branch.
 
 4. Grant SSH access
 Place the dev machine's public key into git user's
